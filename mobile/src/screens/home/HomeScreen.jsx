@@ -7,11 +7,14 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 	Platform,
+	Dimensions,
 } from "react-native";
 
 import profile from "../../assets/profile.jpg";
 import post from "../../assets/post1.jpg";
 import { AuthContext } from "../../auth/AuthContext";
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function HomeScreen() {
 	const { logOutUser } = useContext(AuthContext);
@@ -34,10 +37,9 @@ export default function HomeScreen() {
 
 				<View>
 					<Image
-						className=""
 						source={post}
-						size={24}
-						style={{ width: screen }}
+						style={{ width: SCREEN_WIDTH, height: SCREEN_WIDTH }}
+						resizeMode="cover"
 					/>
 				</View>
 
