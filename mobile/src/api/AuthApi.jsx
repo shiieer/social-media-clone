@@ -2,7 +2,9 @@
 import ApiClient from "./ApiClient";
 import { API_URL } from "@env";
 
-const BASE_URL = `${API_URL}/auth`;
+// Point to Django accounts API namespace
+// Example: http://localhost:8000/api/accounts
+const BASE_URL = `${API_URL}/api/accounts`;
 const apiClient = new ApiClient(BASE_URL);
 
 // Choose ONE of these approaches:

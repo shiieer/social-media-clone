@@ -1,6 +1,10 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import Profile
+from .models import Profile, Follow
+
+
+User = get_user_model()
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -10,22 +14,26 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ["id", "username", "bio", "avatar"]
 
-from rest_framework import serializers
-from django.contrib.auth import get_user_model
-from .models import Follow
-
-User = get_user_model()
 
 class PublicProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = User
-        fields = ["id", "username", "bio", "avatar", "followers_count", "following_count"]
+        # Represent a user's public profile using their Profile model
+        model = Profile
+        fields = [
+            "id",
+            "username",
+            "bio",
+            "avatar",
+            "followers_count",
+            "following_count",
+        ]
 
     def get_followers_count(self, obj):
-        return obj.followers.count()
-    
+        # obj is Profile; use its user to count followers
+        return Follow.objects.filter(following=obj.user).count()
+
     def get_following_count(self, obj):
-        return obj.following.count()
+        return Follow.objects.filter(follower=obj.user).count()
