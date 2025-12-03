@@ -15,3 +15,5 @@ class FollowAdmin(admin.ModelAdmin):
     search_fields = ("follower__username", "following__username")
 
 
+
+

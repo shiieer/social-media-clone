@@ -1,4 +1,5 @@
-import ApiClient from "./ApiClient";
+// src/api/posts/PostsApi.jsx
+import ApiClient from "../core/ApiClient";
 import { API_URL } from "@env";
 
 const BASE_URL = `${API_URL}/api`;
@@ -28,3 +29,4 @@ export const PostsApi = {
 };
 
 export default PostsApi;
+

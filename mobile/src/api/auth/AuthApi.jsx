@@ -1,5 +1,5 @@
-// src/api/AuthApi.jsx
-import ApiClient from "./ApiClient";
+// src/api/auth/AuthApi.jsx
+import ApiClient from "../core/ApiClient";
 import { API_URL } from "@env";
 
 // Point to Django accounts API namespace
@@ -43,3 +43,12 @@ export async function getProfile(accessToken) {
 	};
 	return await apiClient.get("/me/", headers);
 }
+
+export async function refreshToken(refreshTokenValue) {
+	const headers = {
+		"Content-Type": "application/json",
+		Accept: "application/json",
+	};
+	return await apiClient.post("/token/refresh/", { refresh: refreshTokenValue }, headers);
+}
+

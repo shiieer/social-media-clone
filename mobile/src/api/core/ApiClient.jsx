@@ -1,4 +1,4 @@
-// src/api/ApiClient.jsx
+// src/api/core/ApiClient.jsx
 import { API_URL } from "@env";
 
 class ApiClient {
@@ -121,3 +121,4 @@ class ApiClient {
 }
 
 export default ApiClient;
+

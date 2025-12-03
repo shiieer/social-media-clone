@@ -12,7 +12,7 @@ import {
 	ScrollView,
 	Pressable,
 } from "react-native";
-import { register } from "../../api/AuthApi";
+import { register } from "../../api/auth/AuthApi";
 
 export default function RegisterScreen({ navigation }) {
 	const [form, setForm] = useState({

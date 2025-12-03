@@ -8,6 +8,7 @@ import { AuthContext } from "./src/auth/AuthContext";
 import HomeScreen from "./src/screens/home/HomeScreen";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegisterScreen from "./src/screens/auth/RegisterScreen";
+import ProfileScreen from "./src/screens/profile/ProfileScreen";
 
 import "./global.css";
 
@@ -19,7 +20,12 @@ export default function AppNavigator() {
 	// Memoize screens to prevent render phase updates
 	const screens = useMemo(() => {
 		if (user) {
-			return <Stack.Screen name="Home" component={HomeScreen} />;
+			return (
+				<>
+					<Stack.Screen name="Home" component={HomeScreen} />
+					<Stack.Screen name="Profile" component={ProfileScreen} />
+				</>
+			);
 		}
 		return (
 			<>

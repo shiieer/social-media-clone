@@ -1,54 +1,57 @@
 import React, { useContext } from "react";
-import {
-	View,
-	Image,
-	Text,
-	Button,
-	KeyboardAvoidingView,
-	ScrollView,
-	Platform,
-	Dimensions,
-} from "react-native";
+import { KeyboardAvoidingView, ScrollView, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import profile from "../../assets/profile.jpg";
-import post from "../../assets/post1.jpg";
+import post1 from "../../assets/post1.jpg";
+import post2 from "../../assets/post2.jpg";
+import post3 from "../../assets/post3.jpg";
+import post4 from "../../assets/post4.jpg";
 import { AuthContext } from "../../auth/AuthContext";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+import Footer from "../../navigation/Footer";
+import PostCard from "../../components/post/PostCard";
 
 export default function HomeScreen() {
 	const { logOutUser } = useContext(AuthContext);
 
+	const handleLike = () => {
+		console.log("Like pressed");
+	};
+
+	const handleComment = () => {
+		console.log("Comment pressed");
+	};
+
+	const handleShare = () => {
+		console.log("Share pressed");
+	};
+
+	const handleBookmark = () => {
+		console.log("Bookmark pressed");
+	};
+
 	return (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-			className="flex-1 bg-dark"
-		>
-			<ScrollView keyboardShouldPersistTaps="handled">
-				<View className="flex-row items-center p-4 gap-2">
-					<Image
-						className="rounded-full"
-						source={profile}
-						style={{ height: 48, width: 48 }}
-						resizeMode="cover"
+		<SafeAreaView style={{ flex: 1 }} edges={["top", "left", "right"]}>
+			<KeyboardAvoidingView
+				behavior={Platform.OS === "ios" ? "padding" : "height"}
+				className="flex-1 bg-dark"
+			>
+				<ScrollView keyboardShouldPersistTaps="handled">
+					<PostCard
+						profileImage={profile}
+						username="Hiyori"
+						postImage={[post1, post2, post3, post4]}
+						likes={123}
+						comments={45}
+						shares={5}
+						onLike={handleLike}
+						onComment={handleComment}
+						onShare={handleShare}
+						onBookmark={handleBookmark}
 					/>
-					<Text className="text-white font-bold">Hiyori</Text>
-				</View>
-
-				<View>
-					<Image
-						source={post}
-						style={{ width: SCREEN_WIDTH, height: SCREEN_WIDTH }}
-						resizeMode="cover"
-					/>
-				</View>
-
-				<Button
-					className="color-red-900"
-					title="Logout"
-					onPress={logOutUser}
-				/>
-			</ScrollView>
-		</KeyboardAvoidingView>
+				</ScrollView>
+				<Footer />
+			</KeyboardAvoidingView>
+		</SafeAreaView>
 	);
 }
