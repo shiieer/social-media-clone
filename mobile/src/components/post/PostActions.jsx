@@ -15,21 +15,21 @@ export default function PostActions({
 			<View className="flex-row items-center gap-4">
 				<TouchableOpacity
 					onPress={onLike}
-					className="flex-row items-center gap-1"
+					className="flex-row items-center gap-2"
 				>
 					<HeartIcon />
 					<Text className="text-white font-semibold">{likes}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={onComment}
-					className="flex-row items-center gap-1"
+					className="flex-row items-center gap-2"
 				>
 					<CommentIcon />
 					<Text className="text-white font-semibold">{comments}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={onShare}
-					className="flex-row items-center gap-1"
+					className="flex-row items-center gap-2"
 				>
 					<ShareIcon />
 					<Text className="text-white font-semibold">{shares}</Text>
@@ -41,4 +41,3 @@ export default function PostActions({
 		</View>
 	);
 }
-

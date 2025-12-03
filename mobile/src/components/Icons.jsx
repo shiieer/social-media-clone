@@ -18,7 +18,12 @@ export const AddIcon = ({ size = 24, color = "white" }) => (
 );
 
 export const ChatIcon = ({ size = 24, color = "white" }) => (
-	<Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
+	<Ionicons
+		name="chatbubble-ellipses-outline"
+		size={size}
+		color={color}
+		style={{ transform: [{ scaleX: -1 }] }}
+	/>
 );
 
 export const HeartIcon = ({ size = 16, color = "white" }) => (
@@ -26,8 +31,8 @@ export const HeartIcon = ({ size = 16, color = "white" }) => (
 );
 
 export const CommentIcon = ({ size = 16, color = "white" }) => (
-	<FontAwesome5
-		name="comment"
+	<Ionicons
+		name="chatbubble-outline"
 		size={size}
 		color={color}
 		style={{ transform: [{ scaleX: -1 }] }}
