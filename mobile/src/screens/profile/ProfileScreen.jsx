@@ -1,5 +1,5 @@
-import { FlatList, Image, View } from "react-native";
-import { ScrollView } from "react-native-web";
+import { useMemo } from "react";
+import { Image, View, ScrollView } from "react-native";
 
 const posts = [
 	require("../../assets/post1.jpg"),
@@ -9,20 +9,25 @@ const posts = [
 	require("../../assets/post5.jpg"),
 ];
 
-export default function Profile() {
+export default function ProfileScreen() {
+	const memoizedPosts = useMemo(() => posts, []);
+
 	return (
-		<ScrollView>
+		<ScrollView keyboardShouldPersistTaps="handled" className="flex-1 bg-dark">
 			<View>
-				<Image />
 				<View></View>
 			</View>
 
-			<FlatList
-				data={posts}
-				keyExtractor={(item, index) => index.toString()}
-				numColumns={3}
-				renderItem={({ item }) => <Image source={item} />}
-			/>
+			<View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+				{memoizedPosts.map((item, index) => (
+					<Image
+						key={index}
+						source={item}
+						style={{ width: "33.33%", aspectRatio: 1 }}
+						resizeMode="cover"
+					/>
+				))}
+			</View>
 		</ScrollView>
 	);
 }

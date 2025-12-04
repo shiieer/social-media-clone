@@ -1,11 +1,31 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-    """Custom user model (extend later if needed)."""
+    email = models.EmailField(unique=True)
+    bio = models.TextField(blank=True, null=True)
+    profile_img = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    # You can add extra fields here, e.g. bio, avatar, etc.
-    pass
+    REQUIRED_FIELDS = ['email']
 
+    def __str__(self):
+        return self.username
+    
+class Follower(models.Model):
+    follower = models.ForeignKey(
+        User, related_name="following",
+        on_delete=models.CASCADE
+    )
+    following = models.ForeignKey(
+        User, related_name="followers",
+        on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('follower', 'following')
+
+    def __str__(self):
+        return f"{self.follower} -> {self.following}"

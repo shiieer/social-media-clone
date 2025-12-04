@@ -1,19 +1,18 @@
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
-
-User = get_user_model()
+from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """Basic user info returned by /me/ etc."""
+    followers_count = serializers.IntegerField(source="followers.count", read_only=True)
+    following_count = serializers.IntegerField(source="following.count", read_only=True)
 
     class Meta:
         model = User
-        fields = ["id", "username", "email"]
+        fields = ["id", "username", "email", "bio", "profile_img", "followers_count", "following_count"]
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -59,7 +58,6 @@ class CustomLoginSerializer(TokenObtainPairSerializer):
       "user": { id, username, email }
     }
     """
-
     def validate(self, attrs):
         login_input = attrs.get("username")
         password = attrs.get("password")

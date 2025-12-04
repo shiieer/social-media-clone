@@ -5,10 +5,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import { AuthContext } from "./src/auth/AuthContext";
 
-import HomeScreen from "./src/screens/home/HomeScreen";
+import MainTabContainer from "./src/navigation/MainTabContainer";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegisterScreen from "./src/screens/auth/RegisterScreen";
-import ProfileScreen from "./src/screens/profile/ProfileScreen";
 
 import "./global.css";
 
@@ -22,8 +21,7 @@ export default function AppNavigator() {
 		if (user) {
 			return (
 				<>
-					<Stack.Screen name="Home" component={HomeScreen} />
-					<Stack.Screen name="Profile" component={ProfileScreen} />
+					<Stack.Screen name="Main" component={MainTabContainer} />
 				</>
 			);
 		}
@@ -41,7 +39,13 @@ export default function AppNavigator() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator screenOptions={{ headerShown: false }}>
+			<Stack.Navigator
+				screenOptions={{
+					headerShown: false,
+					animation: "slide_from_right",
+					animationDuration: 200,
+				}}
+			>
 				{screens}
 			</Stack.Navigator>
 		</NavigationContainer>

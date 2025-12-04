@@ -6,6 +6,10 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 export const HomeIcon = ({ size = 24, color = "white" }) => (
+	<Octicons name="home" size={size} color={color} />
+);
+
+export const HomeIconActive = ({ size = 24, color = "white" }) => (
 	<Octicons name="home-fill" size={size} color={color} />
 );
 

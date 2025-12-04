@@ -1,18 +1,18 @@
 import { useState } from "react";
-import {
-	View,
-	TouchableOpacity,
-	Image,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HomeIcon, SearchIcon, AddIcon, ChatIcon } from "../components/Icons";
+import {
+	HomeIcon,
+	SearchIcon,
+	AddIcon,
+	ChatIcon,
+	HomeIconActive,
+} from "../components/Icons";
 import ProfileModal from "../components/ProfileModal";
 
 import profile from "../assets/profile.jpg";
 
-export default function Footer() {
-	const navigation = useNavigation();
+export default function Footer({ activeTab, setActiveTab }) {
 	const [visible, setVisible] = useState(false);
 
 	const openMenu = () => {
@@ -23,6 +23,8 @@ export default function Footer() {
 		setVisible(false);
 	};
 
+	const isActive = (screen) => activeTab === screen;
+
 	return (
 		<>
 			<SafeAreaView
@@ -31,10 +33,10 @@ export default function Footer() {
 			>
 				<View className="flex-row justify-around items-center py-3">
 					<TouchableOpacity
-						onPress={() => navigation.navigate("Home")}
+						onPress={() => setActiveTab("Home")}
 						className="items-center"
 					>
-						<HomeIcon />
+						{isActive("Home") ? <HomeIconActive /> : <HomeIcon />}
 					</TouchableOpacity>
 
 					<TouchableOpacity
@@ -59,24 +61,30 @@ export default function Footer() {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => {}}
+						onPress={() => setActiveTab("Profile")}
 						onLongPress={openMenu}
 						className="items-center"
 					>
-						<Image
-							className="rounded-full"
-							source={profile}
-							style={{ height: 24, width: 24 }}
-							resizeMode="cover"
-						/>
+						{isActive("Profile") ? (
+							<Image
+								className="rounded-full border-2 border-white"
+								source={profile}
+								style={{ height: 24, width: 24 }}
+								resizeMode="cover"
+							/>
+						) : (
+							<Image
+								className="rounded-full"
+								source={profile}
+								style={{ height: 24, width: 24 }}
+								resizeMode="cover"
+							/>
+						)}
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
 
-			<ProfileModal
-				visible={visible}
-				onClose={closeMenu}
-			/>
+			<ProfileModal visible={visible} onClose={closeMenu} />
 		</>
 	);
 }
