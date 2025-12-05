@@ -3,12 +3,12 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import User
+from .models import User, Follower
 
 
 class UserSerializer(serializers.ModelSerializer):
-    followers_count = serializers.IntegerField(source="followers.count", read_only=True)
-    following_count = serializers.IntegerField(source="following.count", read_only=True)
+    followers_count = serializers.IntegerField(source="account_followers.count", read_only=True)
+    following_count = serializers.IntegerField(source="account_following.count", read_only=True)
 
     class Meta:
         model = User
@@ -88,3 +88,8 @@ class CustomLoginSerializer(TokenObtainPairSerializer):
                 "email": user.email,
             },
         }
+    
+class FollowerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Follower
+        fields = "__all__"

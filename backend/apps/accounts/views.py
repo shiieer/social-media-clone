@@ -1,10 +1,12 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from .models import User, Follower
 from .serializers import CustomLoginSerializer, UserSerializer, RegisterSerializer
 
 
@@ -85,4 +87,24 @@ class CustomTokenRefreshView(TokenRefreshView):
         
         return response
 
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
+class FollowToggleView(APIView):
+    def post(self, request, user_id):
+        follower = request.user
+        try:
+            target = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=404)
+        
+        # check if already following
+        obj = Follower.objects.filter(follower=follower, following=target).first()
+
+        if obj:
+            obj.delete()
+            return Response({"status": "unfollowed"})
+        
+        Follower.objects.create(follower=follower, following=target)
+        return Response({"status": "followed"})

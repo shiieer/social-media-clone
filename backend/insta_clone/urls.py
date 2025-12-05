@@ -8,6 +8,9 @@ urlpatterns = [
     # API namespaces
     path("api/accounts/", include("apps.accounts.urls")),
     path("api/profiles/", include("apps.profiles.urls")),
+    path("api/posts/", include("apps.posts.urls")),
+    path("api/chat/", include("apps.chat.urls")),
+    path("api/notifications/", include("apps.notifications.urls")),
 ]
 
 if settings.DEBUG:

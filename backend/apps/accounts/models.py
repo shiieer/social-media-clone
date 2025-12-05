@@ -15,11 +15,11 @@ class User(AbstractUser):
     
 class Follower(models.Model):
     follower = models.ForeignKey(
-        User, related_name="following",
+        User, related_name="account_following",
         on_delete=models.CASCADE
     )
     following = models.ForeignKey(
-        User, related_name="followers",
+        User, related_name="account_followers",
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
