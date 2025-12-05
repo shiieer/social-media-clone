@@ -134,7 +134,12 @@ API_URL=http://localhost:8000
 npm start
 ```
 
-5. Run on device/emulator:
+5. Start Expo project and clear the Metro bundler cache (optional):
+```bash
+expo start -c
+```
+
+6. Run on device/emulator:
 - Press `a` for Android
 - Press `i` for iOS
 - Scan QR code with Expo Go app
