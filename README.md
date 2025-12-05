@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Social Media Clone
 
 A full-stack social media application inspired by Instagram, built with Django REST Framework backend and React Native mobile app.
@@ -270,4 +271,6 @@ Your Name
 - Expo Team
 
 
+=======
+>>>>>>> 5e770aa802cdd410996125975766722f4959d9d2
 
