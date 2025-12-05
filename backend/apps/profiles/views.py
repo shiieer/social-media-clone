@@ -1,4 +1,6 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
+from rest_framework.exceptions import NotFound
+from rest_framework.response import Response
 
 from .models import Profile
 from .serializers import ProfileSerializer
@@ -11,21 +13,59 @@ class MyProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         profile, _ = Profile.objects.get_or_create(user=self.request.user)
         return profile
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({"success": True, "data": serializer.data}, status=status.HTTP_200_OK)
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({"success": True, "data": serializer.data}, status=status.HTTP_200_OK)
 
-from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from .models import Follow
 from .serializers import PublicProfileSerializer
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 User = get_user_model()
 
 class PublicProfileView(generics.RetrieveAPIView):
-    queryset = User.objects.all()
     serializer_class = PublicProfileSerializer
     permission_classes = [AllowAny]
+    lookup_field = "user_id"
+    
+    def get_object(self):
+        user_id = self.kwargs.get("user_id")
+        try:
+            user = User.objects.get(id=user_id)
+            profile, _ = Profile.objects.get_or_create(user=user)
+            return profile
+        except User.DoesNotExist:
+            raise NotFound("User not found")
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({"success": True, "data": serializer.data}, status=status.HTTP_200_OK)
+
+class PublicProfileByUsernameView(APIView):
+    serializer_class = PublicProfileSerializer
+    permission_classes = [AllowAny]
+    
+    def get(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+            profile, _ = Profile.objects.get_or_create(user=user)
+            serializer = PublicProfileSerializer(profile)
+            return Response({"success": True, "data": serializer.data}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            raise NotFound("User not found")
 
 class FollowToggleView(APIView):
     permission_classes = [IsAuthenticated]
