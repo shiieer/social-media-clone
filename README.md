@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Social Media Clone
 
 A full-stack social media application inspired by Instagram, built with Django REST Framework backend and React Native mobile app.
