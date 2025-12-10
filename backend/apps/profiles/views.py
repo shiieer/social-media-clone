@@ -1,9 +1,12 @@
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.views import APIView
+from django.contrib.auth import get_user_model
 
-from .models import Profile
-from .serializers import ProfileSerializer
+from .models import Profile, Follow
+from .serializers import ProfileSerializer, PublicProfileSerializer
 
 
 class MyProfileView(generics.RetrieveUpdateAPIView):
@@ -26,12 +29,6 @@ class MyProfileView(generics.RetrieveUpdateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response({"success": True, "data": serializer.data}, status=status.HTTP_200_OK)
-
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.views import APIView
-from django.contrib.auth import get_user_model
-from .models import Follow
-from .serializers import PublicProfileSerializer
 
 User = get_user_model()
 

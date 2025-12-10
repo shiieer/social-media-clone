@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-
 class Profile(models.Model):
     # Each user has one profile with extra info
     user = models.OneToOneField(
@@ -14,7 +13,6 @@ class Profile(models.Model):
 
     def __str__(self) -> str:
         return f"Profile({self.user.username})"
-
 
 class Follow(models.Model):
     """Simple follower/following relationship between users."""
