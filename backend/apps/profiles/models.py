@@ -8,6 +8,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         related_name="profile",
     )
+    name = models.CharField(max_length=150, blank=True, help_text="Display name (can be different from username)")
     bio = models.TextField(blank=True)
     avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
 

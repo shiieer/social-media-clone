@@ -51,8 +51,6 @@ export default function LoginScreen({ navigation }) {
 				setError(message);
 				Alert.alert("Login failed", message);
 			} else {
-				// Login successful - AuthContext will update user state
-				// and AppNavigator will automatically navigate to Home
 				console.log("Login successful");
 			}
 		} catch (error) {

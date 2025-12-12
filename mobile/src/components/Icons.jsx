@@ -1,3 +1,4 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Octicons from "@expo/vector-icons/Octicons";
 import Feather from "@expo/vector-icons/Feather";
@@ -49,4 +50,12 @@ export const ShareIcon = ({ size = 16, color = "white" }) => (
 
 export const BookmarkIcon = ({ size = 16, color = "white" }) => (
 	<FontAwesome5 name="bookmark" size={size} color={color} />
+);
+
+export const CreatePost = ({ size = 16, color = "white" }) => (
+	<AntDesign name="plus" size={size} color={color} />
+);
+
+export const UserSetting = ({ size = 16, color = "white" }) => (
+	<AntDesign name="menu" size={size} color={color} />
 );

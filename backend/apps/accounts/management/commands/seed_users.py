@@ -79,6 +79,7 @@ class Command(BaseCommand):
         Profile.objects.get_or_create(
             user=admin,
             defaults={
+                "name": "Admin",
                 "bio": "I am the administrator of this social media platform.",
             },
         )
@@ -99,6 +100,7 @@ class Command(BaseCommand):
                 "username": "johndoe",
                 "email": "john@example.com",
                 "password": "password123",
+                "name": "John Doe",
                 "bio": "Photography enthusiast and travel lover 📸✈️",
                 "profile_img": "https://via.placeholder.com/150?text=John",
             },
@@ -106,6 +108,7 @@ class Command(BaseCommand):
                 "username": "janedoe",
                 "email": "jane@example.com",
                 "password": "password123",
+                "name": "Jane Doe",
                 "bio": "Food blogger and recipe creator 🍳👩‍🍳",
                 "profile_img": "https://via.placeholder.com/150?text=Jane",
             },
@@ -113,6 +116,7 @@ class Command(BaseCommand):
                 "username": "alice",
                 "email": "alice@example.com",
                 "password": "password123",
+                "name": "Alice Smith",
                 "bio": "Fitness coach and yoga instructor 💪🧘",
                 "profile_img": "https://via.placeholder.com/150?text=Alice",
             },
@@ -120,6 +124,7 @@ class Command(BaseCommand):
                 "username": "bob",
                 "email": "bob@example.com",
                 "password": "password123",
+                "name": "Bob Johnson",
                 "bio": "Tech enthusiast and developer 💻🚀",
                 "profile_img": "https://via.placeholder.com/150?text=Bob",
             },
@@ -127,6 +132,7 @@ class Command(BaseCommand):
                 "username": "charlie",
                 "email": "charlie@example.com",
                 "password": "password123",
+                "name": "Charlie Brown",
                 "bio": "Musician and music producer 🎵🎸",
                 "profile_img": "https://via.placeholder.com/150?text=Charlie",
             },
@@ -142,6 +148,7 @@ class Command(BaseCommand):
                     "username": f"user{i+1}",
                     "email": f"user{i+1}@example.com",
                     "password": "password123",
+                    "name": f"User {i+1}",
                     "bio": f"This is user {i+1}'s bio.",
                     "profile_img": f"https://via.placeholder.com/150?text=User{i+1}",
                 }
@@ -171,6 +178,7 @@ class Command(BaseCommand):
             Profile.objects.get_or_create(
                 user=user,
                 defaults={
+                    "name": user_data.get("name", ""),
                     "bio": user_data.get("bio", ""),
                 },
             )
