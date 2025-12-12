@@ -7,6 +7,7 @@ import {
 	AddIcon,
 	ChatIcon,
 	HomeIconActive,
+	ChatIconActive,
 } from "../components/Icons";
 import ProfileModal from "../components/ProfileModal";
 
@@ -54,10 +55,10 @@ export default function Footer({ activeTab, setActiveTab }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => {}}
+						onPress={() => setActiveTab("Chat")}
 						className="items-center"
 					>
-						<ChatIcon />
+						{isActive("Chat") ? <ChatIconActive /> : <ChatIcon />}
 					</TouchableOpacity>
 
 					<TouchableOpacity

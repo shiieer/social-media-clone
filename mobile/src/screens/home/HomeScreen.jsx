@@ -25,7 +25,22 @@ export default function HomeScreen() {
 	};
 
 	return (
-		<ScrollView keyboardShouldPersistTaps="handled" className="flex-1 bg-dark">
+		<ScrollView
+			keyboardShouldPersistTaps="handled"
+			className="flex-1 bg-dark"
+		>
+			<PostCard
+				profileImage={profile}
+				username="Hiyori"
+				postImage={[post1, post2, post3, post4]}
+				likes={123}
+				comments={45}
+				shares={5}
+				onLike={handleLike}
+				onComment={handleComment}
+				onShare={handleShare}
+				onBookmark={handleBookmark}
+			/>
 			<PostCard
 				profileImage={profile}
 				username="Hiyori"

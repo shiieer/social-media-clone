@@ -26,7 +26,7 @@ export default function ProfileHeader({
 				) : (
 					username && (
 						<Text className="text-white font-semibold text-base">
-							@{username}
+							{username}
 						</Text>
 					)
 				)}

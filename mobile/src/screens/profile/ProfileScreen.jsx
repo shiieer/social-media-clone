@@ -14,7 +14,6 @@ import defaultProfileImage from "../../assets/profile.jpg";
 
 import { AuthContext } from "../../auth/AuthContext";
 import { getMyProfile } from "../../api/profile/ProfileApi";
-import Header from "../../navigation/Header";
 
 const posts = [
 	require("../../assets/post1.jpg"),
@@ -45,14 +44,14 @@ export default function ProfileScreen() {
 			setLoading(true);
 			setError(null);
 			const res = await getMyProfile(accessToken);
-			
+
 			console.log("Profile API Response:", JSON.stringify(res, null, 2));
 
 			if (res.success) {
 				// Backend returns { success: true, data: { ...profile data } }
 				// ApiClient wraps it: { success: true, data: { success: true, data: {...} } }
 				const profileData = res.data?.data || res.data;
-				
+
 				if (profileData) {
 					setProfileData(profileData);
 				} else {
@@ -116,7 +115,6 @@ export default function ProfileScreen() {
 				keyboardShouldPersistTaps="handled"
 				className="flex-grow"
 			>
-				<Header username={profileData.username} />
 				<View className="px-4 py-6 gap-4">
 					<ProfileHeader
 						profileImage={

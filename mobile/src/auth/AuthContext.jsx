@@ -105,7 +105,9 @@ export function AuthProvider({ children }) {
 		try {
 			const result = await getProfile(accessToken);
 			if (result.success) {
-				return { ...result.data, accessToken };
+				// Handle nested response structure: result.data.data or result.data
+				const profileData = result.data?.data || result.data;
+				return { ...profileData, accessToken };
 			}
 			// If profile load fails with 401/403, return null to trigger refresh
 			if (result.status === 401 || result.status === 403) {
@@ -156,11 +158,23 @@ export function AuthProvider({ children }) {
 
 			await tokenStorage.saveTokens(accessToken, refreshToken);
 
-			const userWithToken = { ...userData, accessToken: accessToken };
-			setUser(userWithToken);
-
-			console.log("Login successful, returning result");
-			return { success: true, data: userWithToken };
+			// Load full user profile to get username and other details
+			const profileResult = await loadUserProfile(accessToken);
+			if (profileResult) {
+				// Use profile data which should have username
+				console.log("Profile loaded after login:", JSON.stringify(profileResult, null, 2));
+				console.log("Username from profile:", profileResult.username);
+				setUser(profileResult);
+				console.log("Login successful, profile loaded");
+				return { success: true, data: profileResult };
+			} else {
+				// Fallback to userData from login if profile load fails
+				console.log("Profile load failed, using login response data:", JSON.stringify(userData, null, 2));
+				const userWithToken = { ...userData, accessToken: accessToken };
+				setUser(userWithToken);
+				console.log("Login successful, using login response data");
+				return { success: true, data: userWithToken };
+			}
 		} else {
 				console.log("Login failed, returning error");
 				const errorMessage =

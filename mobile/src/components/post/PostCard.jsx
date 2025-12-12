@@ -17,7 +17,7 @@ export default function PostCard({
 	onBookmark,
 }) {
 	return (
-		<View>
+		<View className="mb-5">
 			<PostHeader profileImage={profileImage} username={username} />
 			<PostImage source={postImage} />
 			<PostActions
