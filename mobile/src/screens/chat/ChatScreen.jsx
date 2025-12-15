@@ -33,7 +33,12 @@ export default function ChatScreen() {
 				</TouchableOpacity>
 			</View>
 
-			<View className="p-6">
+			<View className="flex p-6 gap-4">
+				<View>
+					<Text className="text-white text-lg font-bold tracking-wider">
+						Messages
+					</Text>
+				</View>
 				<View className="flex-row items-center justify-between">
 					<View className="flex-row items-center gap-4">
 						<Image

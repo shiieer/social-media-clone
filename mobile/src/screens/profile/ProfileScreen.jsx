@@ -14,6 +14,7 @@ import defaultProfileImage from "../../assets/profile.jpg";
 
 import { AuthContext } from "../../auth/AuthContext";
 import { getMyProfile } from "../../api/profile/ProfileApi";
+import { useImagePreview } from "../../components/imagePreview";
 
 const posts = [
 	require("../../assets/post1.jpg"),
@@ -27,6 +28,7 @@ export default function ProfileScreen() {
 	const memoizedPosts = useMemo(() => posts, []);
 
 	const { user, initializing } = useContext(AuthContext);
+	const { openPreview } = useImagePreview();
 	const [profileData, setProfileData] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -137,7 +139,18 @@ export default function ProfileScreen() {
 					/>
 				</View>
 
-				<ProfilePostsGrid posts={memoizedPosts} />
+				<ProfilePostsGrid
+					posts={memoizedPosts}
+					onImageLongPress={(image) => {
+						openPreview(
+							image,
+							profileData.avatar
+								? { uri: profileData.avatar }
+								: defaultProfileImage,
+							profileData.username || "User"
+						);
+					}}
+				/>
 			</ScrollView>
 		</KeyboardAvoidingView>
 	);

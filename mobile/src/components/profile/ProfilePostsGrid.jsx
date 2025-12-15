@@ -1,6 +1,6 @@
-import { View, Image } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 
-export default function ProfilePostsGrid({ posts }) {
+export default function ProfilePostsGrid({ posts, onImageLongPress }) {
 	return (
 		<View
 			style={{
@@ -11,16 +11,26 @@ export default function ProfilePostsGrid({ posts }) {
 			}}
 		>
 			{posts.map((item, index) => (
-				<Image
+				<TouchableOpacity
 					key={index}
-					source={item}
-					style={{ width: "33%", aspectRatio: 1 }}
-					resizeMode="cover"
-				/>
+					style={{
+						width: "33%",
+						aspectRatio: 1,
+						overflow: "hidden",
+					}}
+					activeOpacity={0.7}
+					onLongPress={() => onImageLongPress?.(item)}
+				>
+					<Image
+						source={item}
+						style={{
+							width: "100%",
+							height: "100%",
+						}}
+						resizeMode="cover"
+					/>
+				</TouchableOpacity>
 			))}
 		</View>
 	);
 }
-
-
-

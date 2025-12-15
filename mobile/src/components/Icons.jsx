@@ -82,3 +82,19 @@ export const SearchChat = ({ size = 16, color = "white" }) => (
 		color={color}
 	/>
 );
+
+export const NotificationIcon = ({ size = 24, color = "white" }) => (
+	<FontAwesome name="heart-o" size={size} color={color} />
+);
+
+export const NewChatIcon = ({ size = 24, color = "white" }) => (
+	<FontAwesome6 name="pen-to-square" size={size} color={color} />
+);
+
+export const PinIcon = ({ size = 24, color = "white" }) => (
+	<Ionicons name="push-outline" size={size} color={color} />
+);
+
+export const RepostIcon = ({ size = 24, color = "white" }) => (
+	<Feather name="repeat" size={size} color={color} />
+);
