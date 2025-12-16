@@ -8,6 +8,7 @@ import { AuthContext } from "./src/auth/AuthContext";
 import MainTabContainer from "./src/navigation/MainTabContainer";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegisterScreen from "./src/screens/auth/RegisterScreen";
+import MessageDetailScreen from "./src/screens/chat/MessageDetailScreen";
 
 import "./global.css";
 
@@ -22,6 +23,10 @@ export default function AppNavigator() {
 			return (
 				<>
 					<Stack.Screen name="Main" component={MainTabContainer} />
+					<Stack.Screen
+						name="MessageDetail"
+						component={MessageDetailScreen}
+					/>
 				</>
 			);
 		}

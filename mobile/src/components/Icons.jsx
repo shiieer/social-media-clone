@@ -98,3 +98,7 @@ export const PinIcon = ({ size = 24, color = "white" }) => (
 export const RepostIcon = ({ size = 24, color = "white" }) => (
 	<Feather name="repeat" size={size} color={color} />
 );
+
+export const ArrowLeft = ({ size = 24, color = "white" }) => (
+	<Feather name="arrow-left" size={size} color={color} />
+);
