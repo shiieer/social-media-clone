@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, Animated } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import {
 	CreatePost,
 	UserSetting,
@@ -12,6 +13,7 @@ import {
 } from "../hooks/useScreenTransition";
 
 export default function Header({ type = "home", username }) {
+	const navigation = useNavigation();
 	const { animatedStyle } = useScreenTransition(type, {
 		...AnimationPresets.quickFade,
 		slideOffset: 20,
@@ -41,7 +43,7 @@ export default function Header({ type = "home", username }) {
 					<Text className="text-white font-semibold text-2xl">
 						{username || "User"}
 					</Text>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => navigation.navigate("NewMessage")}>
 						<NewChatIcon />
 					</TouchableOpacity>
 				</View>

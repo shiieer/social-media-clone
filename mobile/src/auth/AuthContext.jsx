@@ -2,16 +2,33 @@
 import { createContext, useEffect, useState, useCallback, useMemo } from "react";
 import { tokenStorage } from "./TokenStorage";
 import { login, getProfile, refreshToken } from "../api/auth/AuthApi";
+import { setUnauthorizedHandler } from "../api/core/apiInterceptor";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [initializing, setInitializing] = useState(true);
 
+	// Setup API interceptors to handle token expiration
+	// This must be set before any API calls
+	const setupApiInterceptors = useCallback(() => {
+		// Set global unauthorized handler
+		// This will be called when any API returns 401/403
+		setUnauthorizedHandler(async (status) => {
+			console.log(`[Auth] Unauthorized error (${status}), token expired. Logging out...`);
+			// Clear tokens and logout
+			await tokenStorage.clearTokens();
+			setUser(null);
+		});
+	}, []);
+
 	useEffect(() => {
+		// Setup API interceptors first, before initializing auth
+		setupApiInterceptors();
 		initializeAuth();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Restore user from storage if state was lost during hot reload
@@ -90,12 +107,24 @@ export function AuthProvider({ children }) {
 					return userProfile;
 				}
 			}
+			// If refresh fails with 401/403, refresh token is also expired
+			if (result.status === 401 || result.status === 403) {
+				console.log("Refresh token expired, logging out...");
+				await tokenStorage.clearTokens();
+				setUser(null);
+			}
 			return null;
 		} catch (error) {
 			console.error("Token refresh error:", error);
-			// If refresh endpoint doesn't exist (404) or refresh token is invalid, return null
+			// If refresh endpoint doesn't exist (404), return null
 			if (error.status === 404) {
 				console.log("Refresh endpoint not available, skipping token refresh");
+			}
+			// If refresh token is expired (401/403), logout
+			if (error.status === 401 || error.status === 403) {
+				console.log("Refresh token expired, logging out...");
+				await tokenStorage.clearTokens();
+				setUser(null);
 			}
 			return null;
 		}

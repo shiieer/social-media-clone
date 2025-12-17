@@ -9,6 +9,7 @@ import MainTabContainer from "./src/navigation/MainTabContainer";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegisterScreen from "./src/screens/auth/RegisterScreen";
 import MessageDetailScreen from "./src/screens/chat/MessageDetailScreen";
+import NewMessageScreen from "./src/screens/chat/NewMessageScreen";
 
 import "./global.css";
 
@@ -26,6 +27,10 @@ export default function AppNavigator() {
 					<Stack.Screen
 						name="MessageDetail"
 						component={MessageDetailScreen}
+					/>
+					<Stack.Screen
+						name="NewMessage"
+						component={NewMessageScreen}
 					/>
 				</>
 			);

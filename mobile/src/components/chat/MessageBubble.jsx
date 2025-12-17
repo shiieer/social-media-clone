@@ -8,6 +8,7 @@ export default function MessageBubble({
 	isFirst = false,
 	isLast = false,
 	marginBottom = 16,
+	isRead = true,
 }) {
 	const fadeAnim = useRef(new Animated.Value(0)).current;
 	const scaleAnim = useRef(new Animated.Value(0.8)).current;
@@ -65,9 +66,18 @@ export default function MessageBubble({
 				]}
 			>
 				<Text className="text-white">{message.text}</Text>
-				<Text className="text-xs mt-1 text-messagetext">
-					{message.timestamp}
-				</Text>
+				<View className="flex-row items-center justify-end gap-1 mt-1">
+					<Text className="text-xs text-messagetext">
+						{message.timestamp}
+					</Text>
+					{/* Blue dot for unread sent messages (Instagram style) */}
+					{isSent && !isRead && (
+						<View 
+							className="bg-blue-500 rounded-full"
+							style={{ width: 8, height: 8 }}
+						/>
+					)}
+				</View>
 			</View>
 		</Animated.View>
 	);

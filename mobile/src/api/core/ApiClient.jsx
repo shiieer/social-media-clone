@@ -1,5 +1,6 @@
 // src/api/core/ApiClient.jsx
 import { API_URL } from "@env";
+import { handleUnauthorized } from "./apiInterceptor";
 
 class ApiClient {
 	constructor(baseURL) {
@@ -9,10 +10,10 @@ class ApiClient {
 	async request(endpoint, options = {}) {
 		const url = `${this.baseURL}${endpoint}`;
 
-		// Debug: Log URL yang digunakan (hapus di production)
+		// Debug: Log URL being used (remove in production)
 		console.log(`[API] Requesting: ${url}`);
 		if (!API_URL || API_URL === undefined) {
-			console.error("[API ERROR] API_URL tidak terdefinisi! Pastikan file .env ada dan berisi API_URL");
+			console.error("[API ERROR] API_URL is not defined! Make sure .env file exists and contains API_URL");
 		}
 
 		// Create base config with method
@@ -51,6 +52,12 @@ class ApiClient {
 			}
 
 			if (!response.ok) {
+				// Handle unauthorized errors (401/403) - token expired
+				if (response.status === 401 || response.status === 403) {
+					// Call global unauthorized handler
+					handleUnauthorized(response.status);
+				}
+
 				return {
 					success: false,
 					error: this.getErrorMessage(data),
@@ -66,11 +73,11 @@ class ApiClient {
 			};
 		} catch (error) {
 			console.error(`[API ERROR] Request failed: ${endpoint}`, error);
-			console.error(`[API ERROR] URL yang digunakan: ${url}`);
-			console.error(`[API ERROR] API_URL: ${API_URL || 'TIDAK TERDEFINISI'}`);
+			console.error(`[API ERROR] URL used: ${url}`);
+			console.error(`[API ERROR] API_URL: ${API_URL || 'NOT DEFINED'}`);
 			return {
 				success: false,
-				error: `Network error: ${error.message}. Pastikan backend berjalan dan API_URL benar di file .env`,
+				error: `Network error: ${error.message}. Make sure backend is running and API_URL is correct in .env file`,
 				status: 0,
 			};
 		}

@@ -5,6 +5,7 @@ export default function MessageInput({
 	onMessageChange,
 	onSend,
 	keyboardHeight,
+	disabled = false,
 }) {
 	return (
 		<View
@@ -27,14 +28,14 @@ export default function MessageInput({
 			</View>
 			<TouchableOpacity
 				onPress={onSend}
-				disabled={!message.trim()}
+				disabled={!message.trim() || disabled}
 				className={`ml-3 px-6 py-3 rounded-full ${
-					message.trim() ? "bg-primary" : "bg-gray-700"
+					message.trim() && !disabled ? "bg-primary" : "bg-gray-700"
 				}`}
 			>
 				<Text
 					className={`font-semibold ${
-						message.trim() ? "text-white" : "text-gray-400"
+						message.trim() && !disabled ? "text-white" : "text-gray-400"
 					}`}
 				>
 					Send

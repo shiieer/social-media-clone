@@ -1,4 +1,5 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import ProfileImage from "../ProfileImage";
 
 export default function MessageItem({
 	profileImage,
@@ -14,16 +15,18 @@ export default function MessageItem({
 			activeOpacity={0.7}
 		>
 			<View className="flex-row items-center gap-4">
-				<Image
+				<ProfileImage
 					source={profileImage}
-					className="rounded-full"
-					style={{ width: 56, height: 56 }}
+					size={56}
 				/>
 				<View>
 					<Text className="text-white font-semibold">
 						{username}
 					</Text>
-					<Text className="text-messagetext" numberOfLines={1}>
+					<Text 
+						className={hasUnread ? "text-white font-medium" : "text-messagetext"} 
+						numberOfLines={1}
+					>
 						{lastMessage}
 					</Text>
 				</View>
